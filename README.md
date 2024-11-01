@@ -1,3 +1,7 @@
+# Prestashop Installation Guide v1.7.8.11 (Copy & Paste)
+
+
+
 
 ## Installation
 
