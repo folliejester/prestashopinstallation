@@ -1,0 +1,28 @@
+crontab -e
+
+0 2 * * * curl "https://site.com/admin/cron_currency_rates.php?secure_key=key"
+0 10 * * * curl "https://site.com/admin/cron_currency_rates.php?secure_key=key"
+0 18 * * * curl "https://site.com/admin/cron_currency_rates.php?secure_key=key"
+___________________________________________________________________________________________________
+ How to check $secureKey;
+# nano /var/www/html/admin/cron_currency_rates.php
+Add "echo $secureKey" in the below line.
+
+if (isset($_GET['secure_key'])) {
+    $secureKey = md5(_COOKIE_KEY_.Configuration::get('PS_SHOP_NAME'));
+    #echo $secureKey;
+    if (!empty($secureKey) && $secureKey === $_GET['secure_key']) {
+        $shop_ids = Shop::getCompleteListOfShopsID();
+        foreach ($shop_ids as $shop_id) {
+            Shop::setContext(Shop::CONTEXT_SHOP, (int)$shop_id);
+            Currency::refreshCurrencies();
+        }
+    }
+}
+
+then execute the following command. in here, the below secure_key is anything of available you like.
+
+# php /var/www/html/admin/cron_currency_rates.php secure_key
+
+displayed the correct secure key.
+___________________________________________________________________________________________________
