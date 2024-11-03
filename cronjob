@@ -1,3 +1,5 @@
+Auto update currency:
+
 crontab -e
 
 0 2 * * * curl "https://site.com/admin/cron_currency_rates.php?secure_key=key"
